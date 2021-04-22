@@ -1,0 +1,81 @@
+VPC
+1. Navigate to the VPC section of the AWS console
+2. Click Your VPCs
+3. Click Create VPC
+4. Give it a Name Tag: VPC-demo
+5. Give it an IPv6 block if so desired (auto assigns a /56 IPv6 Block)
+6. Leave Tenancy to Default
+
+
+Subnet
+10.0.0.0/24 - Public Subnet for Web Servers [ vpc-demo-a-public ]
+10.0.1.0/25 - Private Subnet for API Servers [ vpc-demo-a-private ]
+10.0.1.128/26 - Database Subnet for DBs [ vpc-demo-a-db ]
+10.0.1.192/26 - Spare Subnet [ vpc-demo-a-spare ]
+
+1. In the VPC console, go to Subnets on the side panel.
+2. Click on Create Subnet
+3. Give it a Name Tag: vpc-demo-a-public
+4. For Availability Zone, choose ap-south-1a
+5. For IPv4 CIDR block type 10.0.0.0/24
+6. Rinse and repeat for the above ranges
+
+
+Route Tables
+The Public Route Table
+1) In the VPC console, click on Route Tables in the side bar
+2) Click Create Route Table
+3) Give the Name Tag something like: public-roads
+4) Select the VPC-demo VPC
+5) Click Yes, Create
+
+Now we need to create the Internet Gateway
+1) In the VPC console, click on Internet Gateways
+2) Click Create Internet Gateway
+3) Give it a Name Tag, something like: public-roads-igw
+4) After it's created click on Attach to VPC
+
+Now to set it up on the Route Table
+1) In the VPC console, click Route Tables
+2) Select the Route Table that we created
+3) In the bottom tabs, under Routes click Edit
+4) Click Add another route
+5) For Destination input 0.0.0.0/0
+6) For Target select our newly created internet gateway: public-roads-igw
+7) Click Save but don't leave this page yet...
+8) In this same page, with our Route Table Selected, click Subnet Associations
+9) Click Edit and select our vpc-demo-a-public subnet, or whichever subnet you'd like to be public
+
+The Private Route Table
+** We could just use the default
+1) In the VPC console, click on Route Tables in the side bar
+2) Click Create Route Table
+3) Give the Name Tag something like: private-roads
+4) Select the VPC-demo VPC
+5) Click Yes, Create
+
+Now we need to create the NAT Gateway
+1) In the VPC console, click on NAT Gateways
+2) Click Create NAT Gateway
+3) Select our Public Subnets we want our NAT gateway to sit in: vpc-demo-a-public
+4) Click Create New EIP
+** NAT Gateways require an Elastic IP Address
+5) Click Create a NAT Gateway and View NAT Gateways (refresh the screen)
+
+Rinse and repeat!
+1) In the VPC console, click Route Tables
+2) Select the Route Table that we created, private-roads
+3) In the bottom tabs, under Routes click Edit
+4) Click Add another route
+5) For Destination input 0.0.0.0/0
+6) For Target select our newly created nat gateway
+7) Click Save but don't leave this page yet...
+8) In this same page, with our Route Table Selected, click Subnet Associations
+9) Click Edit and select our vpc-demo-a-private, vpc-demo-a-db and vpc-demo-a-spare subnets.
+
+And there's our private subnet with access to the internet. For IPv6 private subnets, we'd only need to:
+1) Create an Egress Only Internet Gateway
+2) Select our VPC
+3) In our Route Table private-roads, click Edit
+4) For Destination input ::/0
+5) For Target select our Egress Only Internet Gateway
