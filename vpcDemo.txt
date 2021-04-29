@@ -79,3 +79,34 @@ And there's our private subnet with access to the internet. For IPv6 private sub
 3) In our Route Table private-roads, click Edit
 4) For Destination input ::/0
 5) For Target select our Egress Only Internet Gateway
+
+Security group is the firewall of EC2 Instances.
+Network ACL is the firewall of the VPC Subnets.
+
+Security groups are stateful: 
+This means any changes applied to an incoming rule will be automatically applied to the outgoing rule. 
+e.g. If you allow an incoming port 80, the outgoing port 80 will be automatically opened.
+
+Network ACLs are stateless: 
+This means any changes applied to an incoming rule will not be applied to the outgoing rule. 
+e.g. If you allow an incoming port 80, you would also need to apply the rule for outgoing traffic.
+
+Rules: Allow or Deny
+Security group support allow rules only (by default all rules are denied). 
+e.g. You cannot deny a certain IP address from establishing a connection.
+Network ACL support allow and deny rules.
+By deny rules, you could explicitly deny a certain IP address to establish a connection example: 
+Block IP address 123.201.57.39 from establishing a connection to an EC2 Instance.
+
+Rule process order
+All rules in a security group are applied whereas rules are applied in their order 
+(the rule with the lower number gets processed first) in Network ACL.
+100, 200, 300, 400, 500
+
+Defense order
+Network ACL first layer of defense, 
+whereas Security group is second layer of the defense for inbound/ingress traffic.
+Security group first layer of defense, 
+whereas Network ACL is second layer of the defense for outbound/egress traffic.
+
+Subnet can have only one NACL, whereas Instance can have multiple Security groups.
