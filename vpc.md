@@ -1,4 +1,4 @@
-##VPC
+## VPC
 _`Configuring VPC` hands-on walkthrough sessions (3 sessions, 1 hour each)_
 _for **Cloud Computing** Class in `SEM 6` of undergrad_
 
@@ -9,7 +9,7 @@ _for **Cloud Computing** Class in `SEM 6` of undergrad_
 5. Give it an IPv6 block if so desired (auto assigns a /56 IPv6 Block)
 6. Leave Tenancy to Default
 
-###`Subnet`
+### `Subnet`
 
 ```
 10.0.0.0/24 - Public Subnet for Web Servers [ vpc-demo-a-public ]
@@ -25,9 +25,7 @@ _for **Cloud Computing** Class in `SEM 6` of undergrad_
 5. For IPv4 CIDR block type 10.0.0.0/24
 6. Rinse and repeat for the above ranges
 
-<br />
-
-###`Route Tables`
+### `Route Tables`
 **The Public Route Table**
 
 1. In the VPC console, click on Route Tables in the side bar
@@ -56,6 +54,7 @@ _Now to set it up on the Route Table_
 9. Click Edit and select our vpc-demo-a-public subnet, or whichever subnet you'd like to be public
 
 **The Private Route Table**
+
 _We could just use the default_
 
 1. In the VPC console, click on Route Tables in the side bar
@@ -93,11 +92,9 @@ _And there's our private subnet with access to the internet. For IPv6 private su
 4. For Destination input ::/0
 5. For Target select our Egress Only Internet Gateway
 
-<br />
+#### `Security group is the firewall of EC2 Instances`
 
-####`Security group is the firewall of EC2 Instances`
-
-####`Network ACL is the firewall of the VPC Subnets`
+#### `Network ACL is the firewall of the VPC Subnets`
 
 _Security groups are stateful_
 This means any changes applied to an incoming rule will be automatically applied to the outgoing rule.
@@ -107,7 +104,7 @@ _Network ACLs are stateless_
 This means any changes applied to an incoming rule will not be applied to the outgoing rule.
 e.g. If you allow an incoming port 80, you would also need to apply the rule for outgoing traffic.
 
-####`Rules: Allow or Deny`
+#### `Rules: Allow or Deny`
 Security group support allow rules only (`by default all rules are denied`).
 e.g. You cannot deny a certain IP address from establishing a connection.
 Network ACL support allow and deny rules.
