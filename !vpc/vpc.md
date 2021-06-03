@@ -1,4 +1,5 @@
 ## VPC
+
 _`Configuring VPC` hands-on walkthrough sessions (3 sessions, 1 hour each)_
 _for **Cloud Computing** Class in `SEM 6` of undergrad_
 
@@ -26,6 +27,7 @@ _for **Cloud Computing** Class in `SEM 6` of undergrad_
 6. Rinse and repeat for the above ranges
 
 ### `Route Tables`
+
 **The Public Route Table**
 
 1. In the VPC console, click on Route Tables in the side bar
@@ -105,6 +107,7 @@ This means any changes applied to an incoming rule will not be applied to the ou
 e.g. If you allow an incoming port 80, you would also need to apply the rule for outgoing traffic.
 
 #### `Rules: Allow or Deny`
+
 Security group support allow rules only (`by default all rules are denied`).
 e.g. You cannot deny a certain IP address from establishing a connection.
 Network ACL support allow and deny rules.
